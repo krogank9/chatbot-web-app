@@ -39,15 +39,18 @@ install_llama_cpp() {
     # Uninstall any existing llama-cpp-python
     pip uninstall -y llama-cpp-python
     
+    # Install build dependencies
+    pip install cmake ninja setuptools packaging
+
     # Set environment variables for CUDA build
-    export LLAMA_CUBLAS=1
-    export CMAKE_ARGS="-DLLAMA_CUBLAS=on"
+    export GGML_CUDA=1
+    export CMAKE_ARGS="-DGGML_CUDA=on"
     
-    # First try the pre-built wheel
-    pip install llama-cpp-python --extra-index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu118 --no-cache-dir
+    # Try to build from source with CUDA support
+    pip install llama-cpp-python --no-cache-dir --verbose
     
     # Verify CUDA support
-    python3 -c "from llama_cpp import Llama; print('CUDA Support:', 'cublas' in str(Llama.library_paths()).lower())"
+    python3 -c "from llama_cpp import Llama; print('CUDA Support:', 'cuda' in str(Llama.library_paths()).lower())"
 }
 
 # Main setup process
