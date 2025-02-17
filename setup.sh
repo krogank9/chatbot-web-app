@@ -34,40 +34,24 @@ setup_venv() {
 
 # Function to install CUDA-enabled llama-cpp-python
 install_llama_cpp() {
-    echo "Installing CUDA-enabled llama-cpp-python..."
+    echo "Installing pre-built CUDA-enabled llama-cpp-python..."
     
     # Uninstall any existing llama-cpp-python
     pip uninstall -y llama-cpp-python
 
-    # Install build dependencies
-    pip install --upgrade pip wheel setuptools packaging
-    pip install cmake ninja
+    # Try installing pre-built wheel with CUDA support
+    pip install --upgrade pip wheel
     
-    # Install CUDA build tools
-    if ! command_exists nvcc; then
-        echo "Installing CUDA toolkit..."
-        apt-get update && apt-get install -y cuda-toolkit-11-8
-    fi
-
-    # Set environment variables for CUDA build
-    export CUDA_HOME=/usr/local/cuda
-    export PATH=$CUDA_HOME/bin:$PATH
-    export LD_LIBRARY_PATH=$CUDA_HOME/lib64:$LD_LIBRARY_PATH
-    
-    export GGML_CUDA=1
-    export CMAKE_ARGS="-DGGML_CUDA=ON -DLLAMA_CUBLAS=OFF"
-    
-    echo "Building llama-cpp-python with CUDA support..."
-    pip install llama-cpp-python --no-cache-dir --verbose
+    # Install the pre-built CUDA wheel
+    pip install llama-cpp-python --prefer-binary --extra-index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu118
     
     # Verify installation
     echo "Verifying installation..."
     if python3 -c "import llama_cpp; print('llama_cpp version:', llama_cpp.__version__)"; then
         echo "llama-cpp-python installed successfully"
     else
-        echo "Failed to import llama_cpp. Trying alternative installation..."
-        # Try alternative installation method
-        pip install --force-reinstall --no-cache-dir llama-cpp-python --prefer-binary
+        echo "Failed to import llama_cpp. Installation failed."
+        exit 1
     fi
 }
 
