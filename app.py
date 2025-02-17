@@ -160,11 +160,16 @@ def load_model():
                 n_gpu_layers=-1,
                 n_ctx=2048,
                 n_batch=512,
-                verbose=True,  # Enable verbose mode to see loading progress
-                offload_kqv=False,  # Disable KQV offloading on GPU
-                use_mlock=False,  # Disable memory locking
-                use_mmap=True,
-                n_threads=8  # Limit number of threads
+                verbose=True,
+                use_mmap=False,  # Disable memory mapping for full GPU loading
+                use_mlock=False,
+                n_threads=8,
+                seed=-1,
+                n_threads_batch=8,
+                main_gpu=0,  # Use primary GPU
+                tensor_split=None,  # Don't split across GPUs
+                rope_scaling=None,  # Default scaling
+                numa=False  # Disable NUMA optimization
             )
             loaded_models.llm = model_id
             
@@ -258,11 +263,16 @@ def chat():
                 n_gpu_layers=-1,
                 n_ctx=2048,
                 n_batch=512,
-                verbose=True,  # Enable verbose mode to see loading progress
-                offload_kqv=False,  # Disable KQV offloading on GPU
-                use_mlock=False,  # Disable memory locking
-                use_mmap=True,
-                n_threads=8  # Limit number of threads
+                verbose=True,
+                use_mmap=False,  # Disable memory mapping for full GPU loading
+                use_mlock=False,
+                n_threads=8,
+                seed=-1,
+                n_threads_batch=8,
+                main_gpu=0,  # Use primary GPU
+                tensor_split=None,  # Don't split across GPUs
+                rope_scaling=None,  # Default scaling
+                numa=False  # Disable NUMA optimization
             )
             loaded_models.llm = 'mistral-7b'
         except Exception as e:
