@@ -160,10 +160,11 @@ def load_model():
                 n_gpu_layers=-1,
                 n_ctx=2048,
                 n_batch=512,
-                verbose=False,
-                offload_kqv=True,
-                use_mlock=True,
+                verbose=True,  # Enable verbose mode to see loading progress
+                offload_kqv=False,  # Disable KQV offloading on GPU
+                use_mlock=False,  # Disable memory locking
                 use_mmap=True,
+                n_threads=8  # Limit number of threads
             )
             loaded_models.llm = model_id
             
@@ -257,10 +258,11 @@ def chat():
                 n_gpu_layers=-1,
                 n_ctx=2048,
                 n_batch=512,
-                verbose=False,
-                offload_kqv=True,
-                use_mlock=True,
+                verbose=True,  # Enable verbose mode to see loading progress
+                offload_kqv=False,  # Disable KQV offloading on GPU
+                use_mlock=False,  # Disable memory locking
                 use_mmap=True,
+                n_threads=8  # Limit number of threads
             )
             loaded_models.llm = 'mistral-7b'
         except Exception as e:
