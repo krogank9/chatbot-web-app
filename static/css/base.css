@@ -1,0 +1,77 @@
+:root {
+    --bg-dark: #0a0a0a;
+    --bg-darker: #000000;
+    --accent-blue: #3d5a99;
+    --text-light: #e0e0e0;
+    --text-dim: #808080;
+    --border-color: #1a1a1a;
+}
+
+/* Base Layout */
+body {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-darker);
+    color: var(--text-light);
+}
+
+/* Common Components */
+.page-header {
+    background-color: var(--bg-dark);
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+}
+
+.content-container {
+    flex: 1;
+    padding: 2rem;
+    overflow-y: auto;
+}
+
+/* Card Styles */
+.custom-card {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Form Styles */
+.form-control, .form-select {
+    background-color: var(--bg-darker);
+    border-color: var(--border-color);
+    color: var(--text-light);
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: var(--bg-darker);
+    border-color: var(--accent-blue);
+    color: var(--text-light);
+    box-shadow: 0 0 0 0.25rem rgba(61, 90, 153, 0.25);
+}
+
+/* Modal Styles */
+.modal-content {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+}
+
+.modal-header {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.modal-footer {
+    border-top: 1px solid var(--border-color);
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: var(--accent-blue);
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #4d6ab9;
+} 

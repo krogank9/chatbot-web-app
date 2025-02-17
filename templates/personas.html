@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html data-bs-theme="dark">
+<head>
+    <title>Manage Personas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/personas.css">
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Manage Personas</h2>
+            <div>
+                <a href="/" class="btn btn-outline-primary me-2">
+                    <i class="bi bi-chat"></i> Back to Chat
+                </a>
+                <button class="btn btn-primary" onclick="showNewPersonaModal()">
+                    <i class="bi bi-plus-lg"></i> New Persona
+                </button>
+            </div>
+        </div>
+
+        <div class="row g-4" id="personasList">
+            <!-- Personas will be listed here -->
+        </div>
+    </div>
+
+    <!-- Persona Modal -->
+    <div class="modal fade" id="personaModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalTitle">New Persona</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="personaForm">
+                        <input type="hidden" id="personaId">
+                        <div class="mb-3">
+                            <label class="form-label">Name</label>
+                            <input type="text" class="form-control" id="personaName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <input type="text" class="form-control" id="personaDescription" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">System Prompt</label>
+                            <textarea class="form-control" id="personaSystemPrompt" rows="4" required></textarea>
+                            <small class="text-muted">This is the instruction given to the AI about its role and behavior.</small>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Greeting Message</label>
+                            <input type="text" class="form-control" id="personaGreeting" required>
+                            <small class="text-muted">This message will be shown when starting a new chat.</small>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" onclick="savePersona()">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const personaModal = new bootstrap.Modal(document.getElementById('personaModal'));
+        let editingPersonaId = null;
+
+        function loadPersonas() {
+            fetch('/personas')
+                .then(response => response.json())
+                .then(personas => {
+                    const container = document.getElementById('personasList');
+                    container.innerHTML = personas.map(persona => `
+                        <div class="col-12 col-md-6 col-lg-4">
+                            <div class="card h-100">
+                                <div class="card-body">
+                                    <h5 class="card-title">${persona.name}</h5>
+                                    <p class="card-text text-muted">${persona.description}</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">Created: ${new Date(persona.created_at).toLocaleDateString()}</small>
+                                        <button class="btn btn-outline-primary btn-sm" onclick="editPersona('${persona.id}')">
+                                            <i class="bi bi-pencil"></i> Edit
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                });
+        }
+
+        function showNewPersonaModal() {
+            editingPersonaId = null;
+            document.getElementById('modalTitle').textContent = 'New Persona';
+            document.getElementById('personaForm').reset();
+            personaModal.show();
+        }
+
+        function editPersona(personaId) {
+            editingPersonaId = personaId;
+            document.getElementById('modalTitle').textContent = 'Edit Persona';
+            
+            fetch(`/personas/${personaId}`)
+                .then(response => response.json())
+                .then(persona => {
+                    document.getElementById('personaName').value = persona.name;
+                    document.getElementById('personaDescription').value = persona.description;
+                    document.getElementById('personaSystemPrompt').value = persona.system_prompt;
+                    document.getElementById('personaGreeting').value = persona.greeting;
+                    personaModal.show();
+                });
+        }
+
+        function savePersona() {
+            const data = {
+                name: document.getElementById('personaName').value,
+                description: document.getElementById('personaDescription').value,
+                system_prompt: document.getElementById('personaSystemPrompt').value,
+                greeting: document.getElementById('personaGreeting').value
+            };
+
+            const method = editingPersonaId ? 'PUT' : 'POST';
+            const url = editingPersonaId ? `/personas/${editingPersonaId}` : '/personas';
+
+            fetch(url, {
+                method: method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.error) {
+                    alert(result.error);
+                } else {
+                    personaModal.hide();
+                    loadPersonas();
+                }
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', loadPersonas);
+    </script>
+</body>
+</html> 

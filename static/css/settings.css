@@ -1,0 +1,173 @@
+/* Settings Sections */
+.settings-section {
+    background-color: var(--bg-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.settings-section h3 {
+    margin-bottom: 1.5rem;
+    color: var(--text-light);
+}
+
+.settings-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.settings-label {
+    flex: 1;
+}
+
+.settings-value {
+    flex: 2;
+}
+
+.settings-description {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+/* Range Input Styling */
+.custom-range {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 6px;
+    background-color: var(--border-color);
+    border-radius: 3px;
+    outline: none;
+}
+
+.custom-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.custom-range::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Base theme overrides */
+body {
+    background-color: #000000;
+    color: #e0e0e0;
+}
+
+/* Model Cards */
+.model-card {
+    background-color: #0a0a0a;
+    border: 1px solid #1a1a1a;
+}
+
+.model-card:hover {
+    border-color: #3d5a99;
+    box-shadow: 0 4px 12px rgba(61, 90, 153, 0.2);
+}
+
+.model-card.active {
+    border-color: #3d5a99;
+    box-shadow: 0 0 0 1px #3d5a99;
+}
+
+/* Progress Bars */
+.progress {
+    background-color: #1a1a1a;
+}
+
+.progress-bar {
+    background-color: #3d5a99;
+}
+
+/* Category Headers */
+.category-title {
+    color: #3d5a99;
+    border-bottom: 2px solid #1a1a1a;
+}
+
+/* System Stats */
+.system-stats {
+    background-color: #0a0a0a;
+    border-bottom: 1px solid #1a1a1a;
+    padding: 0.5rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.stat-label {
+    color: #808080;
+}
+
+.stat-value {
+    color: #ffffff;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+/* Mini Progress Bars */
+.mini-progress {
+    width: 50px;
+    height: 4px;
+    background-color: #21262d;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.mini-progress-bar {
+    height: 100%;
+    background-color: #58a6ff;
+    transition: width 0.3s ease;
+}
+
+/* Status Colors */
+.warning {
+    color: #e6b800;
+}
+
+.danger {
+    color: #ff4444;
+}
+
+/* Badges */
+.badge.bg-success {
+    background-color: #238636 !important;
+}
+
+.badge.bg-secondary {
+    background-color: #30363d !important;
+}
+
+.loaded-badge {
+    background-color: #3d5a99 !important;
+}
+
+/* Card Text */
+.card-text {
+    color: #b0b0b0;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        padding-top: 1rem;
+    }
+} 

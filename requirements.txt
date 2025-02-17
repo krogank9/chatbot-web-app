@@ -1,0 +1,9 @@
+flask
+llama-cpp-python
+torch
+tqdm
+requests
+scipy
+psutil
+gputil==1.4.0 
+kokoro>=0.3.4
