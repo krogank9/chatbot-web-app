@@ -1,6 +1,7 @@
 flask
 llama-cpp-python
 torch
+torchaudio
 tqdm
 requests
 scipy
