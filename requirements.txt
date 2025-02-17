@@ -1,5 +1,5 @@
 flask
-llama-cpp-python
+llama-cpp-python --extra-index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu118
 torch
 torchaudio
 tqdm
