@@ -43,7 +43,7 @@ install_llama_cpp() {
     pip install --upgrade pip wheel
     
     # Install the pre-built CUDA wheel
-    pip install llama-cpp-python --prefer-binary --extra-index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu118
+    pip install --no-cache-dir --force-reinstall --upgrade llama-cpp-python==0.2.23+cu118 --extra-index-url https://jllllll.github.io/llama-cpp-python-cuBLAS-wheels/AVX2/cu118
     
     # Verify installation
     echo "Verifying installation..."
